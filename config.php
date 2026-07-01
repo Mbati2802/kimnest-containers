@@ -12,7 +12,7 @@ define('SITE_URL', 'https://kimnestcontainers.co.ke');
 define('SITE_EMAIL', 'info@kimnestcontainers.co.ke');
 define('SITE_PHONE', '+254 XXX XXX XXX');
 define('SITE_WHATSAPP', '254XXXXXXXXX');
-define('BASE_URL', '/kimnest');
+define('BASE_URL', '');
 
 // Upload Configuration
 define('UPLOAD_DIR', __DIR__ . '/uploads/');
