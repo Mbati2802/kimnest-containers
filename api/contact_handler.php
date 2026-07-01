@@ -36,6 +36,20 @@ try {
     $stmt = $pdo->prepare("INSERT INTO contacts (full_name, phone, email, subject, message, attachment) VALUES (?, ?, ?, ?, ?, ?)");
     $stmt->execute([$full_name, $phone, $email, $subject, $message, $attachment]);
     
+    // Send email notification to admin using template
+    $adminEmail = getSetting('site_email', SITE_EMAIL);
+    $notif = renderNotification('contact_notification', [
+        'name'      => htmlspecialchars($full_name),
+        'email'     => htmlspecialchars($email),
+        'phone'     => htmlspecialchars($phone ?: 'Not provided'),
+        'subject'   => htmlspecialchars($subject),
+        'message'   => nl2br(htmlspecialchars($message)),
+        'admin_url' => SITE_URL . '/admin/contacts.php',
+    ]);
+    if ($notif) {
+        sendMail($adminEmail, $notif['subject'], $notif['body'], null, null, $email);
+    }
+
     echo json_encode(['success' => true, 'message' => 'Thank you! Your message has been sent. We will get back to you shortly.']);
 } catch (PDOException $e) {
     echo json_encode(['success' => false, 'message' => 'Database error. Please try again later.']);

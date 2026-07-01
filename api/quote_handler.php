@@ -58,6 +58,45 @@ try {
         unset($_SESSION['cart']);
     }
 
+    // Build cart section for template
+    $cartSection = '';
+    if (!empty($cart_data)) {
+        $cartItems = json_decode($cart_data, true);
+        if (is_array($cartItems)) {
+            $cartSection = '<h3>Cart Items:</h3><ul>';
+            foreach ($cartItems as $item) {
+                $cartSection .= '<li>' . htmlspecialchars($item['name'] ?? 'Product');
+                if (!empty($item['size'])) $cartSection .= ' - ' . htmlspecialchars($item['size']);
+                if (!empty($item['qty'])) $cartSection .= ' x ' . (int)$item['qty'];
+                $cartSection .= '</li>';
+            }
+            $cartSection .= '</ul>';
+        }
+    }
+
+    // Send email notification to admin using template
+    $adminEmail = getSetting('site_email', SITE_EMAIL);
+    $notif = renderNotification('quote_notification', [
+        'name'            => htmlspecialchars($full_name),
+        'company'         => htmlspecialchars($company_name ?: 'N/A'),
+        'email'           => htmlspecialchars($email),
+        'phone'           => htmlspecialchars($phone),
+        'contact_method'  => htmlspecialchars($contact_method),
+        'project_type'    => htmlspecialchars($project_type ?: 'N/A'),
+        'container_size'  => htmlspecialchars($container_size ?: 'N/A'),
+        'quantity'        => $quantity,
+        'location'        => htmlspecialchars($project_location ?: 'N/A'),
+        'intended_use'    => htmlspecialchars($intended_use ?: 'N/A'),
+        'budget'          => htmlspecialchars($budget ?: 'N/A'),
+        'completion_date' => htmlspecialchars($completion_date ?: 'N/A'),
+        'description'     => nl2br(htmlspecialchars($description ?: 'N/A')),
+        'cart_section'    => $cartSection,
+        'admin_url'       => SITE_URL . '/admin/quotes.php',
+    ]);
+    if ($notif) {
+        sendMail($adminEmail, $notif['subject'], $notif['body'], null, null, $email);
+    }
+
     $response = ['success' => true, 'message' => 'Thank you! Your quote request has been submitted. We will contact you shortly.'];
     if (!empty($cart_data)) {
         $response['redirect'] = BASE_URL . '/request-quote?thank_you=1';

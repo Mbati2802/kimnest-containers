@@ -160,6 +160,18 @@ CREATE TABLE newsletter (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
+-- Notification Templates
+CREATE TABLE notification_templates (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    template_key VARCHAR(100) NOT NULL UNIQUE,
+    name VARCHAR(255) NOT NULL,
+    subject VARCHAR(255) NOT NULL,
+    body LONGTEXT NOT NULL,
+    placeholders TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
 -- Insert default admin user
 INSERT INTO admin_users (username, password, full_name, email) VALUES
 ('admin', '$2y$10$O.pxPhWMsjoCRZz0Bf7JA.jDQjDlRmaudE/fom7hb6ksRqnUnSsfK', 'Administrator', 'admin@kimnestcontainers.co.ke');
@@ -206,6 +218,11 @@ INSERT INTO site_settings (setting_key, setting_value) VALUES
 ('youtube_url', '#'),
 ('mail_from_email', 'noreply@kimnestcontainers.co.ke'),
 ('mail_from_name', 'Kimnest Containers');
+
+-- Default Notification Templates
+INSERT INTO notification_templates (template_key, name, subject, body, placeholders) VALUES
+('contact_notification', 'Contact Form Submission', 'New Contact: {subject}', '<h2>New Contact Message</h2><p><strong>From:</strong> {name}</p><p><strong>Email:</strong> {email}</p><p><strong>Phone:</strong> {phone}</p><p><strong>Subject:</strong> {subject}</p><p><strong>Message:</strong></p><p>{message}</p><hr><p><a href="{admin_url}">View in Admin Panel</a></p>', 'name, email, phone, subject, message, admin_url'),
+('quote_notification', 'Quote Request Submission', 'New Quote Request from {name}', '<h2>New Quote Request</h2><p><strong>From:</strong> {name}</p><p><strong>Company:</strong> {company}</p><p><strong>Email:</strong> {email}</p><p><strong>Phone:</strong> {phone}</p><p><strong>Preferred Contact:</strong> {contact_method}</p><p><strong>Project Type:</strong> {project_type}</p><p><strong>Container Size:</strong> {container_size}</p><p><strong>Quantity:</strong> {quantity}</p><p><strong>Location:</strong> {location}</p><p><strong>Intended Use:</strong> {intended_use}</p><p><strong>Budget:</strong> {budget}</p><p><strong>Completion Date:</strong> {completion_date}</p><p><strong>Description:</strong></p><p>{description}</p>{cart_section}<hr><p><a href="{admin_url}">View in Admin Panel</a></p>', 'name, company, email, phone, contact_method, project_type, container_size, quantity, location, intended_use, budget, completion_date, description, cart_section, admin_url');
 
 -- Default Homepage Content
 INSERT INTO site_content (page_slug, section_key, content_key, content_value, content_type, is_visible) VALUES

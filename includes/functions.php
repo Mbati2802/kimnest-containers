@@ -220,16 +220,38 @@ function getFAQCategories() {
     return $pdo->query("SELECT DISTINCT category FROM faqs ORDER BY category ASC")->fetchAll(PDO::FETCH_COLUMN);
 }
 
-function sendMail($to, $subject, $body, $fromEmail = null, $fromName = null) {
+function getNotificationTemplate($templateKey) {
+    global $pdo;
+    try {
+        $stmt = $pdo->prepare("SELECT subject, body FROM notification_templates WHERE template_key = ?");
+        $stmt->execute([$templateKey]);
+        return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+    } catch (Exception $e) { return null; }
+}
+
+function renderNotification($templateKey, $placeholders = []) {
+    global $pdo;
+    $template = getNotificationTemplate($templateKey);
+    if (!$template) return null;
+    $subject = $template['subject'];
+    $body = $template['body'];
+    foreach ($placeholders as $key => $value) {
+        $subject = str_replace('{' . $key . '}', $value, $subject);
+        $body = str_replace('{' . $key . '}', $value, $body);
+    }
+    return ['subject' => $subject, 'body' => $body];
+}
+
+function sendMail($to, $subject, $body, $fromEmail = null, $fromName = null, $replyTo = null) {
     global $pdo;
     try {
         $stmt = $pdo->query("SELECT setting_key, setting_value FROM site_settings WHERE setting_key IN ('mail_from_email','mail_from_name','site_name')");
         $settings = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
     } catch (Exception $e) { $settings = []; }
-    $fromEmail = $fromEmail ?: ($settings['mail_from_email'] ?? 'noreply@kimnestcontainers.co.ke');
-    $fromName  = $fromName  ?: ($settings['mail_from_name'] ?? ($settings['site_name'] ?? 'Kimnest Containers'));
+    $fromEmail = $settings['mail_from_email'] ?? 'noreply@kimnestcontainers.co.ke';
+    $fromName  = $settings['mail_from_name'] ?? ($settings['site_name'] ?? 'Kimnest Containers');
     $headers   = "From: $fromName <$fromEmail>\r\n";
-    $headers  .= "Reply-To: $fromEmail\r\n";
+    $headers  .= "Reply-To: " . ($replyTo ?: $fromEmail) . "\r\n";
     $headers  .= "MIME-Version: 1.0\r\n";
     $headers  .= "Content-Type: text/html; charset=UTF-8\r\n";
     return mail($to, $subject, $body, $headers);

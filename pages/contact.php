@@ -53,6 +53,11 @@ $heroDesc = getContent('contact', 'hero', 'description', '');
                     </div>
 
                     <div class="form-group">
+                        <label>SUBJECT</label>
+                        <input type="text" name="subject" placeholder="Subject of your message*" required>
+                    </div>
+
+                    <div class="form-group">
                         <label>YOUR MESSAGE</label>
                         <textarea name="message" rows="6" required placeholder="Tell us about your inquiry..."></textarea>
                     </div>

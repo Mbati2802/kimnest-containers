@@ -78,6 +78,7 @@ sort($categories);
                 <a href="<?= BASE_URL ?>/admin/newsletter.php"><i class="fas fa-paper-plane"></i> Newsletter</a>
                 <a href="<?= BASE_URL ?>/admin/faqs.php" class="active"><i class="fas fa-question-circle"></i> FAQs</a>
                 <div class="nav-section">System</div>
+                <a href="<?= BASE_URL ?>/admin/notifications.php"><i class="fas fa-bell"></i> Notifications</a>
                 <a href="<?= BASE_URL ?>/" target="_blank"><i class="fas fa-globe"></i> View Website</a>
                 <a href="<?= BASE_URL ?>/admin/logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </nav>
