@@ -74,27 +74,31 @@ try {
         }
     }
 
-    // Send email notification to admin using template
-    $notif = renderNotification('quote_notification', [
-        'name'            => htmlspecialchars($full_name),
-        'company'         => htmlspecialchars($company_name ?: 'N/A'),
-        'email'           => htmlspecialchars($email),
-        'phone'           => htmlspecialchars($phone),
-        'contact_method'  => htmlspecialchars($contact_method),
-        'project_type'    => htmlspecialchars($project_type ?: 'N/A'),
-        'container_size'  => htmlspecialchars($container_size ?: 'N/A'),
-        'quantity'        => $quantity,
-        'location'        => htmlspecialchars($project_location ?: 'N/A'),
-        'intended_use'    => htmlspecialchars($intended_use ?: 'N/A'),
-        'budget'          => htmlspecialchars($budget ?: 'N/A'),
-        'completion_date' => htmlspecialchars($completion_date ?: 'N/A'),
-        'description'     => nl2br(htmlspecialchars($description ?: 'N/A')),
-        'cart_section'    => $cartSection,
-        'admin_url'       => SITE_URL . '/admin/quotes.php',
-    ]);
-    if ($notif) {
-        $toEmail = $notif['email'] ?: getSetting('notification_email', getSetting('site_email', SITE_EMAIL));
-        sendMail($toEmail, $notif['subject'], $notif['body'], null, null, $email);
+    // Send email notification (wrapped in try-catch so mail failures don't break the form)
+    try {
+        $notif = renderNotification('quote_notification', [
+            'name'            => htmlspecialchars($full_name),
+            'company'         => htmlspecialchars($company_name ?: 'N/A'),
+            'email'           => htmlspecialchars($email),
+            'phone'           => htmlspecialchars($phone),
+            'contact_method'  => htmlspecialchars($contact_method),
+            'project_type'    => htmlspecialchars($project_type ?: 'N/A'),
+            'container_size'  => htmlspecialchars($container_size ?: 'N/A'),
+            'quantity'        => $quantity,
+            'location'        => htmlspecialchars($project_location ?: 'N/A'),
+            'intended_use'    => htmlspecialchars($intended_use ?: 'N/A'),
+            'budget'          => htmlspecialchars($budget ?: 'N/A'),
+            'completion_date' => htmlspecialchars($completion_date ?: 'N/A'),
+            'description'     => nl2br(htmlspecialchars($description ?: 'N/A')),
+            'cart_section'    => $cartSection,
+            'admin_url'       => SITE_URL . '/admin/quotes.php',
+        ]);
+        if ($notif) {
+            $toEmail = $notif['email'] ?: getSetting('notification_email', getSetting('site_email', SITE_EMAIL));
+            sendMail($toEmail, $notif['subject'], $notif['body'], null, null, $email);
+        }
+    } catch (Exception $e) {
+        error_log('Quote notification email failed: ' . $e->getMessage());
     }
 
     $response = ['success' => true, 'message' => 'Thank you! Your quote request has been submitted. We will contact you shortly.'];
