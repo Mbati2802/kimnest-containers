@@ -21,3 +21,6 @@ Thumbs.db
 # Temp files
 /tmp/
 *.tmp
+proposal.md
+stop
+temp_lint.php
