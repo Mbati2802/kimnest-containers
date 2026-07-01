@@ -3480,4 +3480,129 @@ p:last-child {
     .products-grid {
         grid-template-columns: 1fr;
     }
+
+    .page-banner--tall {
+        min-height: 240px;
+        padding: 80px 0 40px;
+    }
+
+    .page-banner__desc {
+        font-size: 14px;
+    }
+
+    .blog-search {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .blog-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .blog-tabs {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 4px;
+    }
+
+    .blog-tab {
+        white-space: nowrap;
+        font-size: 13px;
+        padding: 8px 14px;
+    }
+
+    .newsletter-form {
+        flex-direction: column;
+    }
+
+    .newsletter-form input[type="email"] {
+        width: 100%;
+    }
+
+    .newsletter-form button {
+        width: 100%;
+    }
+
+    .hero-content h1 {
+        font-size: 22px;
+    }
+
+    .hero-content p {
+        font-size: 14px;
+    }
+
+    .section h2 {
+        font-size: 22px;
+    }
+
+    .step-number {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        font-size: 14px;
+    }
+
+    .overline {
+        font-size: 12px;
+    }
+
+    .quote-layout {
+        gap: var(--space-xl);
+    }
+
+    .contact-two-col {
+        gap: var(--space-xl);
+    }
+
+    .contact-info-card-new {
+        padding: var(--space-lg);
+    }
+
+    .footer-col h3 {
+        font-size: 14px;
+    }
+
+    .footer-links li a {
+        font-size: 13px;
+    }
+
+    .footer-contact li {
+        font-size: 13px;
+    }
+
+    .product-card__info {
+        padding: var(--space-md);
+    }
+
+    .product-card__name {
+        font-size: 14px;
+    }
+
+    .product-card__cta {
+        padding: 0 var(--space-md) var(--space-md);
+    }
+
+    .blog-card-new__title {
+        font-size: 15px;
+    }
+
+    .blog-card-new__excerpt {
+        font-size: 13px;
+    }
+
+    .whatsapp-float {
+        width: 44px;
+        height: 44px;
+        font-size: 22px;
+        bottom: 16px;
+        right: 16px;
+    }
+
+    .back-to-top {
+        width: 36px;
+        height: 36px;
+        bottom: 16px;
+        right: 70px;
+    }
 }
