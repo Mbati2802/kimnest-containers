@@ -212,6 +212,8 @@ INSERT INTO site_content (page_slug, section_key, content_key, content_value, co
 ('home', 'hero', 'overline', 'Kenya''s #1 Container Company', 'text', 1),
 ('home', 'hero', 'heading', 'Transforming Containers Into Exceptional Spaces', 'text', 1),
 ('home', 'hero', 'description', 'We design, fabricate, and deliver custom container solutions — from homes and offices to shops, restaurants, and more.', 'textarea', 1),
+('home', 'hero', 'bg_image', '', 'image', 1),
+('home', 'hero', 'overlay_color', '#1a2e4a', 'text', 1),
 ('home', 'hero', 'btn1_text', 'View Products', 'text', 1),
 ('home', 'hero', 'btn1_link', '/products', 'text', 1),
 ('home', 'hero', 'btn2_text', 'Get a Quote', 'text', 1),
@@ -237,47 +239,65 @@ INSERT INTO site_content (page_slug, section_key, content_key, content_value, co
 -- Default About Page Content
 INSERT INTO site_content (page_slug, section_key, content_key, content_value, content_type, is_visible) VALUES
 ('about', 'hero', 'overline', 'About Us', 'text', 1),
-('about', 'hero', 'description', 'Learn more about Kenya''s leading container solutions provider.', 'textarea', 1);
+('about', 'hero', 'description', 'Learn more about Kenya''s leading container solutions provider.', 'textarea', 1),
+('about', 'hero', 'bg_image', '', 'image', 1),
+('about', 'hero', 'overlay_color', '#1a2e4a', 'text', 1);
 
 -- Default Services Page Content
 INSERT INTO site_content (page_slug, section_key, content_key, content_value, content_type, is_visible) VALUES
 ('services', 'hero', 'overline', 'Our Services', 'text', 1),
-('services', 'hero', 'description', 'We offer comprehensive container solutions that combine functionality, innovation, and exceptional craftsmanship.', 'textarea', 1);
+('services', 'hero', 'description', 'We offer comprehensive container solutions that combine functionality, innovation, and exceptional craftsmanship.', 'textarea', 1),
+('services', 'hero', 'bg_image', '', 'image', 1),
+('services', 'hero', 'overlay_color', '#1a2e4a', 'text', 1);
 
 -- Default Products Page Content
 INSERT INTO site_content (page_slug, section_key, content_key, content_value, content_type, is_visible) VALUES
 ('products', 'hero', 'overline', 'Our Products', 'text', 1),
-('products', 'hero', 'description', 'Explore our range of shipping containers available in various sizes and configurations.', 'textarea', 1);
+('products', 'hero', 'description', 'Explore our range of shipping containers available in various sizes and configurations.', 'textarea', 1),
+('products', 'hero', 'bg_image', '', 'image', 1),
+('products', 'hero', 'overlay_color', '#1a2e4a', 'text', 1);
 
 -- Default Projects Page Content
 INSERT INTO site_content (page_slug, section_key, content_key, content_value, content_type, is_visible) VALUES
 ('projects', 'hero', 'overline', 'Our Projects', 'text', 1),
-('projects', 'hero', 'description', 'See our completed container fabrication and modification projects across Kenya.', 'textarea', 1);
+('projects', 'hero', 'description', 'See our completed container fabrication and modification projects across Kenya.', 'textarea', 1),
+('projects', 'hero', 'bg_image', '', 'image', 1),
+('projects', 'hero', 'overlay_color', '#1a2e4a', 'text', 1);
 
 -- Default Blog Page Content
 INSERT INTO site_content (page_slug, section_key, content_key, content_value, content_type, is_visible) VALUES
 ('blog', 'hero', 'overline', 'Blog', 'text', 1),
-('blog', 'hero', 'description', 'Insights, tips, and news from the container industry.', 'textarea', 1);
+('blog', 'hero', 'description', 'Insights, tips, and news from the container industry.', 'textarea', 1),
+('blog', 'hero', 'bg_image', '', 'image', 1),
+('blog', 'hero', 'overlay_color', '#1a2e4a', 'text', 1);
 
 -- Default FAQ Page Content
 INSERT INTO site_content (page_slug, section_key, content_key, content_value, content_type, is_visible) VALUES
 ('faq', 'hero', 'overline', 'FAQ', 'text', 1),
-('faq', 'hero', 'description', 'Frequently asked questions about our container solutions.', 'textarea', 1);
+('faq', 'hero', 'description', 'Frequently asked questions about our container solutions.', 'textarea', 1),
+('faq', 'hero', 'bg_image', '', 'image', 1),
+('faq', 'hero', 'overlay_color', '#1a2e4a', 'text', 1);
 
 -- Default Contact Page Content
 INSERT INTO site_content (page_slug, section_key, content_key, content_value, content_type, is_visible) VALUES
 ('contact', 'hero', 'overline', 'Contact Us', 'text', 1),
-('contact', 'hero', 'description', 'Get in touch with our team for inquiries and quotes.', 'textarea', 1);
+('contact', 'hero', 'description', 'Get in touch with our team for inquiries and quotes.', 'textarea', 1),
+('contact', 'hero', 'bg_image', '', 'image', 1),
+('contact', 'hero', 'overlay_color', '#1a2e4a', 'text', 1);
 
 -- Default Quote Page Content
 INSERT INTO site_content (page_slug, section_key, content_key, content_value, content_type, is_visible) VALUES
 ('quote', 'hero', 'overline', 'Request a Quote', 'text', 1),
-('quote', 'hero', 'description', 'Tell us about your project and we''ll provide a detailed quote.', 'textarea', 1);
+('quote', 'hero', 'description', 'Tell us about your project and we''ll provide a detailed quote.', 'textarea', 1),
+('quote', 'hero', 'bg_image', '', 'image', 1),
+('quote', 'hero', 'overlay_color', '#1a2e4a', 'text', 1);
 
 -- Default Cart Page Content
 INSERT INTO site_content (page_slug, section_key, content_key, content_value, content_type, is_visible) VALUES
 ('cart', 'hero', 'overline', 'Quotation Cart', 'text', 1),
-('cart', 'hero', 'description', 'Review your selected products and submit for a quotation.', 'textarea', 1);
+('cart', 'hero', 'description', 'Review your selected products and submit for a quotation.', 'textarea', 1),
+('cart', 'hero', 'bg_image', '', 'image', 1),
+('cart', 'hero', 'overlay_color', '#1a2e4a', 'text', 1);
 
 -- Seed Products
 INSERT INTO products (name, slug, category, size, description, features, price_label, status, sort_order) VALUES
