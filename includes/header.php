@@ -11,6 +11,9 @@ if (isset($_GET['slug'])) $currentPage = 'blog';
     <meta name="description" content="Kimnest Containers - Kenya's leading container sales, fabrication, and modification company. Container homes, offices, shops, and custom solutions.">
     <meta name="keywords" content="Shipping Containers Kenya, Container Fabrication, Container Homes, Office Containers, Portable Cabins">
     <title><?= getPageTitle($pageTitle ?? '') ?></title>
+    <?php $favicon = getSetting('site_favicon', ''); if (!empty($favicon)): ?>
+        <link rel="icon" type="image/png" href="<?= BASE_URL ?>/<?= htmlspecialchars($favicon) ?>">
+    <?php endif; ?>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/style.css">
 </head>
@@ -19,7 +22,11 @@ if (isset($_GET['slug'])) $currentPage = 'blog';
     <header class="header" id="header">
         <div class="container">
             <a href="<?= BASE_URL ?>/" class="logo">
-                <img src="<?= BASE_URL ?>/assets/images/logo.png" alt="Kimnest Containers" onerror="this.style.display='none'">
+                <?php $logo = getSetting('site_logo', ''); if (!empty($logo)): ?>
+                    <img src="<?= BASE_URL ?>/<?= htmlspecialchars($logo) ?>" alt="<?= htmlspecialchars(getSetting('site_name', SITE_NAME)) ?>" style="height:36px;">
+                <?php else: ?>
+                    <img src="<?= BASE_URL ?>/assets/images/logo.png" alt="Kimnest Containers" onerror="this.style.display='none'">
+                <?php endif; ?>
                 <span class="logo-text">Kim<span>nest</span></span>
             </a>
             

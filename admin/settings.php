@@ -92,6 +92,50 @@ foreach ($settings as $s) {
                             <input type="text" id="site_address" name="site_address" value="<?= htmlspecialchars($settingsMap['site_address'] ?? '') ?>">
                         </div>
 
+                        <h3 style="font-size:14px;font-weight:600;margin:24px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--admin-primary);display:inline-block;">Logo & Favicon</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Site Logo</label>
+                                <div class="image-field">
+                                    <div class="image-preview" style="width:120px;height:60px;background:#f9fafb;display:flex;align-items:center;justify-content:center;border:1px solid var(--admin-border);border-radius:6px;overflow:hidden;">
+                                        <?php if (!empty($settingsMap['site_logo'])): ?>
+                                            <img src="<?= BASE_URL ?>/<?= htmlspecialchars($settingsMap['site_logo']) ?>" style="max-width:100%;max-height:100%;object-fit:contain;">
+                                        <?php else: ?>
+                                            <i class="fas fa-image" style="color:#ccc;font-size:20px;"></i>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="image-actions">
+                                        <input type="hidden" name="site_logo" value="<?= htmlspecialchars($settingsMap['site_logo'] ?? '') ?>">
+                                        <button type="button" class="btn btn-sm btn-outline" onclick="openMediaPicker(this)"><i class="fas fa-upload"></i> Upload</button>
+                                        <?php if (!empty($settingsMap['site_logo'])): ?>
+                                            <button type="button" class="btn btn-sm btn-danger" onclick="this.closest('.image-field').querySelector('input[type=hidden]').value='';this.closest('.image-field').querySelector('.image-preview').innerHTML='<i class=&quot;fas fa-image&quot; style=&quot;color:#ccc;font-size:20px;&quot;></i>'"><i class="fas fa-trash"></i></button>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                                <small style="color:var(--admin-text-muted);font-size:11px;">Recommended: 200×50px, PNG with transparent background</small>
+                            </div>
+                            <div class="form-group">
+                                <label>Favicon</label>
+                                <div class="image-field">
+                                    <div class="image-preview" style="width:48px;height:48px;background:#f9fafb;display:flex;align-items:center;justify-content:center;border:1px solid var(--admin-border);border-radius:6px;overflow:hidden;">
+                                        <?php if (!empty($settingsMap['site_favicon'])): ?>
+                                            <img src="<?= BASE_URL ?>/<?= htmlspecialchars($settingsMap['site_favicon']) ?>" style="max-width:100%;max-height:100%;object-fit:contain;">
+                                        <?php else: ?>
+                                            <i class="fas fa-image" style="color:#ccc;font-size:20px;"></i>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="image-actions">
+                                        <input type="hidden" name="site_favicon" value="<?= htmlspecialchars($settingsMap['site_favicon'] ?? '') ?>">
+                                        <button type="button" class="btn btn-sm btn-outline" onclick="openMediaPicker(this)"><i class="fas fa-upload"></i> Upload</button>
+                                        <?php if (!empty($settingsMap['site_favicon'])): ?>
+                                            <button type="button" class="btn btn-sm btn-danger" onclick="this.closest('.image-field').querySelector('input[type=hidden]').value='';this.closest('.image-field').querySelector('.image-preview').innerHTML='<i class=&quot;fas fa-image&quot; style=&quot;color:#ccc;font-size:20px;&quot;></i>'"><i class="fas fa-trash"></i></button>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                                <small style="color:var(--admin-text-muted);font-size:11px;">Recommended: 32×32px or 64×64px PNG/ICO</small>
+                            </div>
+                        </div>
+
                         <h3 style="font-size:14px;font-weight:600;margin:24px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--admin-primary);display:inline-block;">Contact Information</h3>
                         <div class="form-row">
                             <div class="form-group">
