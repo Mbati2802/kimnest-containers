@@ -71,11 +71,6 @@ function handleUpload($uploadDir) {
         $filepath = $uploadDir . $filename;
 
         if (move_uploaded_file($tmpName, $filepath)) {
-            $xamppUpload = 'C:/xampp/htdocs/kimnest/uploads/' . $filename;
-            if (!is_dir('C:/xampp/htdocs/kimnest/uploads/')) {
-                mkdir('C:/xampp/htdocs/kimnest/uploads/', 0755, true);
-            }
-            copy($filepath, $xamppUpload);
 
             $uploaded[] = [
                 'filename' => $filename,
@@ -115,8 +110,6 @@ function handleDelete($uploadDir) {
 
     if (file_exists($filepath)) {
         if (unlink($filepath)) {
-            $xamppFile = 'C:/xampp/htdocs/kimnest/uploads/' . $filename;
-            if (file_exists($xamppFile)) unlink($xamppFile);
             echo json_encode(['success' => true, 'message' => 'File deleted successfully']);
         } else {
             echo json_encode(['success' => false, 'message' => 'Failed to delete file']);
@@ -131,7 +124,7 @@ function handleList($uploadDir) {
     $seen = [];
     $allowedExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'];
 
-    $dirs = [$uploadDir, 'C:/xampp/htdocs/kimnest/uploads/'];
+    $dirs = [$uploadDir];
     foreach ($dirs as $dir) {
         if (is_dir($dir)) {
             $files = scandir($dir);

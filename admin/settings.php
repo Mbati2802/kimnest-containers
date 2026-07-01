@@ -97,7 +97,7 @@ foreach ($settings as $s) {
                             <div class="form-group">
                                 <label>Site Logo</label>
                                 <div class="image-field">
-                                    <div class="image-preview" style="width:120px;height:60px;background:#f9fafb;display:flex;align-items:center;justify-content:center;border:1px solid var(--admin-border);border-radius:6px;overflow:hidden;">
+                                    <div class="image-preview" id="logo-preview" style="width:120px;height:60px;background:#f9fafb;display:flex;align-items:center;justify-content:center;border:1px solid var(--admin-border);border-radius:6px;overflow:hidden;">
                                         <?php if (!empty($settingsMap['site_logo'])): ?>
                                             <img src="<?= BASE_URL ?>/<?= htmlspecialchars($settingsMap['site_logo']) ?>" style="max-width:100%;max-height:100%;object-fit:contain;">
                                         <?php else: ?>
@@ -105,10 +105,10 @@ foreach ($settings as $s) {
                                         <?php endif; ?>
                                     </div>
                                     <div class="image-actions">
-                                        <input type="hidden" name="site_logo" value="<?= htmlspecialchars($settingsMap['site_logo'] ?? '') ?>">
-                                        <button type="button" class="btn btn-sm btn-outline" onclick="openMediaPicker(this)"><i class="fas fa-upload"></i> Upload</button>
+                                        <input type="hidden" name="site_logo" id="site_logo" value="<?= htmlspecialchars($settingsMap['site_logo'] ?? '') ?>">
+                                        <label class="btn btn-sm btn-outline" style="cursor:pointer;"><i class="fas fa-upload"></i> Upload<input type="file" accept="image/*" style="display:none;" onchange="uploadSettingImage(this, 'site_logo', 'logo-preview')"></label>
                                         <?php if (!empty($settingsMap['site_logo'])): ?>
-                                            <button type="button" class="btn btn-sm btn-danger" onclick="this.closest('.image-field').querySelector('input[type=hidden]').value='';this.closest('.image-field').querySelector('.image-preview').innerHTML='<i class=&quot;fas fa-image&quot; style=&quot;color:#ccc;font-size:20px;&quot;></i>'"><i class="fas fa-trash"></i></button>
+                                            <button type="button" class="btn btn-sm btn-danger" onclick="document.getElementById('site_logo').value='';document.getElementById('logo-preview').innerHTML='<i class=&quot;fas fa-image&quot; style=&quot;color:#ccc;font-size:20px;&quot;></i>'"><i class="fas fa-trash"></i></button>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -117,7 +117,7 @@ foreach ($settings as $s) {
                             <div class="form-group">
                                 <label>Favicon</label>
                                 <div class="image-field">
-                                    <div class="image-preview" style="width:48px;height:48px;background:#f9fafb;display:flex;align-items:center;justify-content:center;border:1px solid var(--admin-border);border-radius:6px;overflow:hidden;">
+                                    <div class="image-preview" id="favicon-preview" style="width:48px;height:48px;background:#f9fafb;display:flex;align-items:center;justify-content:center;border:1px solid var(--admin-border);border-radius:6px;overflow:hidden;">
                                         <?php if (!empty($settingsMap['site_favicon'])): ?>
                                             <img src="<?= BASE_URL ?>/<?= htmlspecialchars($settingsMap['site_favicon']) ?>" style="max-width:100%;max-height:100%;object-fit:contain;">
                                         <?php else: ?>
@@ -125,10 +125,10 @@ foreach ($settings as $s) {
                                         <?php endif; ?>
                                     </div>
                                     <div class="image-actions">
-                                        <input type="hidden" name="site_favicon" value="<?= htmlspecialchars($settingsMap['site_favicon'] ?? '') ?>">
-                                        <button type="button" class="btn btn-sm btn-outline" onclick="openMediaPicker(this)"><i class="fas fa-upload"></i> Upload</button>
+                                        <input type="hidden" name="site_favicon" id="site_favicon" value="<?= htmlspecialchars($settingsMap['site_favicon'] ?? '') ?>">
+                                        <label class="btn btn-sm btn-outline" style="cursor:pointer;"><i class="fas fa-upload"></i> Upload<input type="file" accept="image/*" style="display:none;" onchange="uploadSettingImage(this, 'site_favicon', 'favicon-preview')"></label>
                                         <?php if (!empty($settingsMap['site_favicon'])): ?>
-                                            <button type="button" class="btn btn-sm btn-danger" onclick="this.closest('.image-field').querySelector('input[type=hidden]').value='';this.closest('.image-field').querySelector('.image-preview').innerHTML='<i class=&quot;fas fa-image&quot; style=&quot;color:#ccc;font-size:20px;&quot;></i>'"><i class="fas fa-trash"></i></button>
+                                            <button type="button" class="btn btn-sm btn-danger" onclick="document.getElementById('site_favicon').value='';document.getElementById('favicon-preview').innerHTML='<i class=&quot;fas fa-image&quot; style=&quot;color:#ccc;font-size:20px;&quot;></i>'"><i class="fas fa-trash"></i></button>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -301,6 +301,30 @@ foreach ($settings as $s) {
             pickr.setColor(this.value);
         });
     });
+
+    function uploadSettingImage(input, fieldId, previewId) {
+        if (!input.files || !input.files[0]) return;
+        var file = input.files[0];
+        var formData = new FormData();
+        formData.append('files[]', file);
+        formData.append('action', 'upload');
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '<?= BASE_URL ?>/api/media_handler.php?action=upload', true);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                var resp = JSON.parse(xhr.responseText);
+                if (resp.success && resp.uploaded && resp.uploaded.length > 0) {
+                    var path = 'uploads/' + resp.uploaded[0].filename;
+                    document.getElementById(fieldId).value = path;
+                    document.getElementById(previewId).innerHTML = '<img src="<?= BASE_URL ?>/' + path + '" style="max-width:100%;max-height:100%;object-fit:contain;">';
+                } else {
+                    alert('Upload failed: ' + (resp.message || 'Unknown error'));
+                }
+            }
+        };
+        xhr.send(formData);
+    }
     </script>
 </body>
 </html>
