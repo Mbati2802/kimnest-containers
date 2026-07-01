@@ -2,6 +2,29 @@
 -- Import this into your database via phpMyAdmin
 -- Make sure you have selected your database first
 
+-- Site Settings
+CREATE TABLE site_settings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    setting_key VARCHAR(100) NOT NULL UNIQUE,
+    setting_value TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+-- Site Content (CMS)
+CREATE TABLE site_content (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    page_slug VARCHAR(50) NOT NULL,
+    section_key VARCHAR(50) NOT NULL,
+    content_key VARCHAR(100) NOT NULL,
+    content_value LONGTEXT,
+    content_type ENUM('text', 'textarea', 'html', 'image') DEFAULT 'text',
+    is_visible TINYINT(1) DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_content (page_slug, section_key, content_key)
+) ENGINE=InnoDB;
+
 -- Admin Users
 CREATE TABLE admin_users (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -89,6 +112,45 @@ CREATE TABLE contacts (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
+-- Media Library
+CREATE TABLE media (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    filename VARCHAR(255) NOT NULL,
+    filepath VARCHAR(500) NOT NULL,
+    filetype VARCHAR(50),
+    filesize INT DEFAULT 0,
+    alt_text VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+-- Products
+CREATE TABLE products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    slug VARCHAR(255) NOT NULL UNIQUE,
+    category VARCHAR(100) NOT NULL,
+    size VARCHAR(50),
+    description TEXT,
+    features TEXT,
+    specs JSON,
+    image VARCHAR(255),
+    price_label VARCHAR(100),
+    status ENUM('available', 'limited', 'unavailable') DEFAULT 'available',
+    sort_order INT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+-- Product Images
+CREATE TABLE product_images (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT NOT NULL,
+    image VARCHAR(255) NOT NULL,
+    caption VARCHAR(255),
+    sort_order INT DEFAULT 0,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
 -- Newsletter Subscribers
 CREATE TABLE newsletter (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -128,3 +190,102 @@ CREATE TABLE IF NOT EXISTS newsletter_campaigns (
     status ENUM('draft', 'sending', 'sent', 'failed') DEFAULT 'draft',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
+
+-- Default Site Settings
+INSERT INTO site_settings (setting_key, setting_value) VALUES
+('site_name', 'Kimnest Containers'),
+('site_tagline', 'We weave your property dream into reality. Transforming shipping containers into exceptional living, working, and business spaces.'),
+('site_phone', '+254 712 345 678'),
+('site_email', 'info@kimnestcontainers.co.ke'),
+('site_whatsapp', '254712345678'),
+('site_address', 'Nairobi, Kenya'),
+('facebook_url', '#'),
+('instagram_url', '#'),
+('linkedin_url', '#'),
+('tiktok_url', '#'),
+('youtube_url', '#'),
+('mail_from_email', 'noreply@kimnestcontainers.co.ke'),
+('mail_from_name', 'Kimnest Containers');
+
+-- Default Homepage Content
+INSERT INTO site_content (page_slug, section_key, content_key, content_value, content_type, is_visible) VALUES
+('home', 'hero', 'overline', 'Kenya''s #1 Container Company', 'text', 1),
+('home', 'hero', 'heading', 'Transforming Containers Into Exceptional Spaces', 'text', 1),
+('home', 'hero', 'description', 'We design, fabricate, and deliver custom container solutions — from homes and offices to shops, restaurants, and more.', 'textarea', 1),
+('home', 'hero', 'btn1_text', 'View Products', 'text', 1),
+('home', 'hero', 'btn1_link', '/products', 'text', 1),
+('home', 'hero', 'btn2_text', 'Get a Quote', 'text', 1),
+('home', 'hero', 'btn2_link', '/request-quote', 'text', 1),
+('home', 'stats', 'stat1_number', '500+', 'text', 1),
+('home', 'stats', 'stat1_label', 'Projects Completed', 'text', 1),
+('home', 'stats', 'stat2_number', '10+', 'text', 1),
+('home', 'stats', 'stat2_label', 'Years Experience', 'text', 1),
+('home', 'stats', 'stat3_number', '100%', 'text', 1),
+('home', 'stats', 'stat3_label', 'Customer Satisfaction', 'text', 1),
+('home', 'stats', 'stat4_number', '24/7', 'text', 1),
+('home', 'stats', 'stat4_label', 'Support Available', 'text', 1),
+('home', 'about', 'overline', 'About Us', 'text', 1),
+('home', 'about', 'heading', 'Kenya''s Leading Container Solutions Provider', 'text', 1),
+('home', 'about', 'description', 'With over a decade of experience, Kimnest Containers has established itself as the premier provider of container sales, fabrication, and modification services in Kenya.', 'textarea', 1),
+('home', 'about', 'btn_text', 'Learn More', 'text', 1),
+('home', 'about', 'btn_link', '/about', 'text', 1),
+('home', 'cta', 'heading', 'Ready to Start Your Container Project?', 'text', 1),
+('home', 'cta', 'description', 'Get in touch with our team today for a free consultation and quote.', 'textarea', 1),
+('home', 'cta', 'btn_text', 'Request a Quote', 'text', 1),
+('home', 'cta', 'btn_link', '/request-quote', 'text', 1);
+
+-- Default About Page Content
+INSERT INTO site_content (page_slug, section_key, content_key, content_value, content_type, is_visible) VALUES
+('about', 'hero', 'overline', 'About Us', 'text', 1),
+('about', 'hero', 'description', 'Learn more about Kenya''s leading container solutions provider.', 'textarea', 1);
+
+-- Default Services Page Content
+INSERT INTO site_content (page_slug, section_key, content_key, content_value, content_type, is_visible) VALUES
+('services', 'hero', 'overline', 'Our Services', 'text', 1),
+('services', 'hero', 'description', 'We offer comprehensive container solutions that combine functionality, innovation, and exceptional craftsmanship.', 'textarea', 1);
+
+-- Default Products Page Content
+INSERT INTO site_content (page_slug, section_key, content_key, content_value, content_type, is_visible) VALUES
+('products', 'hero', 'overline', 'Our Products', 'text', 1),
+('products', 'hero', 'description', 'Explore our range of shipping containers available in various sizes and configurations.', 'textarea', 1);
+
+-- Default Projects Page Content
+INSERT INTO site_content (page_slug, section_key, content_key, content_value, content_type, is_visible) VALUES
+('projects', 'hero', 'overline', 'Our Projects', 'text', 1),
+('projects', 'hero', 'description', 'See our completed container fabrication and modification projects across Kenya.', 'textarea', 1);
+
+-- Default Blog Page Content
+INSERT INTO site_content (page_slug, section_key, content_key, content_value, content_type, is_visible) VALUES
+('blog', 'hero', 'overline', 'Blog', 'text', 1),
+('blog', 'hero', 'description', 'Insights, tips, and news from the container industry.', 'textarea', 1);
+
+-- Default FAQ Page Content
+INSERT INTO site_content (page_slug, section_key, content_key, content_value, content_type, is_visible) VALUES
+('faq', 'hero', 'overline', 'FAQ', 'text', 1),
+('faq', 'hero', 'description', 'Frequently asked questions about our container solutions.', 'textarea', 1);
+
+-- Default Contact Page Content
+INSERT INTO site_content (page_slug, section_key, content_key, content_value, content_type, is_visible) VALUES
+('contact', 'hero', 'overline', 'Contact Us', 'text', 1),
+('contact', 'hero', 'description', 'Get in touch with our team for inquiries and quotes.', 'textarea', 1);
+
+-- Default Quote Page Content
+INSERT INTO site_content (page_slug, section_key, content_key, content_value, content_type, is_visible) VALUES
+('quote', 'hero', 'overline', 'Request a Quote', 'text', 1),
+('quote', 'hero', 'description', 'Tell us about your project and we''ll provide a detailed quote.', 'textarea', 1);
+
+-- Default Cart Page Content
+INSERT INTO site_content (page_slug, section_key, content_key, content_value, content_type, is_visible) VALUES
+('cart', 'hero', 'overline', 'Quotation Cart', 'text', 1),
+('cart', 'hero', 'description', 'Review your selected products and submit for a quotation.', 'textarea', 1);
+
+-- Seed Products
+INSERT INTO products (name, slug, category, size, description, features, price_label, status, sort_order) VALUES
+('20ft Standard Container', '20ft-standard', 'Standard', '20ft', 'A versatile 20ft shipping container suitable for storage, office conversion, or retail space.', 'Weatherproof steel construction\nSecure locking mechanism\nStandard ISO dimensions\nVentilation system', 'From KES 280,000', 'available', 1),
+('40ft Standard Container', '40ft-standard', 'Standard', '40ft', 'Spacious 40ft container ideal for large storage needs or multi-room conversions.', 'Weatherproof steel construction\nSecure locking mechanism\nStandard ISO dimensions\nVentilation system', 'From KES 450,000', 'available', 2),
+('20ft High Cube Container', '20ft-high-cube', 'High Cube', '20ft', 'Extra height 20ft container providing additional headroom for comfortable living or working spaces.', 'Extra 1ft height (9.6ft)\nWeatherproof steel\nReinforced flooring\nMultiple door options', 'From KES 350,000', 'available', 3),
+('40ft High Cube Container', '40ft-high-cube', 'High Cube', '40ft', 'Maximum space 40ft high cube container perfect for large-scale projects.', 'Extra 1ft height (9.6ft)\nWeatherproof steel\nReinforced flooring\nMultiple door options', 'From KES 550,000', 'available', 4),
+('20ft Office Container', '20ft-office', 'Modified', '20ft', 'Pre-fitted office container with electrical wiring, insulation, and finishings.', 'Pre-installed electrical system\nInsulated walls and ceiling\nAir conditioning provisions\nWindows and doors', 'From KES 650,000', 'available', 5),
+('40ft Residential Container', '40ft-residential', 'Modified', '40ft', 'Turnkey container home with bathroom, kitchen, and living space.', 'Full electrical and plumbing\nInsulated construction\nBathroom and kitchen fixtures\nCustom layout options', 'From KES 1,200,000', 'available', 6),
+('10ft Mini Container', '10ft-mini', 'Standard', '10ft', 'Compact container ideal for small storage or security cabin conversion.', 'Compact footprint\nWeatherproof steel\nSecure locking\nEasy to transport', 'From KES 150,000', 'available', 7),
+('Container Restaurant', 'container-restaurant', 'Modified', '40ft', 'Custom-built container restaurant with serving counter, kitchen, and dining area.', 'Commercial kitchen fittings\nService counter\nCustomizable layout\nClimate control provisions', 'From KES 1,500,000', 'limited', 8);
