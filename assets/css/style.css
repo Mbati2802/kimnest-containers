@@ -2897,7 +2897,30 @@ p:last-child {
     }
     
     .hanging-cards {
-        margin-top: -50px;
+        margin-top: 10px;
+    }
+
+    .hanging-card {
+        padding: var(--space-lg);
+        gap: var(--space-md);
+    }
+
+    .hanging-card-icon {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+    }
+
+    .hanging-card-icon .number {
+        font-size: 20px;
+    }
+
+    .hanging-card-text h4 {
+        font-size: 14px;
+    }
+
+    .hanging-card-text p {
+        font-size: 12px;
     }
 }
 
