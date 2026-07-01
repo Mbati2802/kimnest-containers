@@ -1,0 +1,23 @@
+# Dependencies
+/vendor/
+/node_modules/
+
+# IDE
+/.idea/
+/.vscode/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Uploads (user content — handle separately on server)
+/uploads/
+
+# Config with credentials (keep local only)
+/config.local.php
+
+# Temp files
+/tmp/
+*.tmp

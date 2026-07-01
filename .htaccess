@@ -1,0 +1,38 @@
+RewriteEngine On
+
+# Force HTTPS (enable on production)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Remove www (enable on production)
+# RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+# RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+# Route pages
+RewriteRule ^about$ pages/about.php [L]
+RewriteRule ^services$ pages/services.php [L]
+RewriteRule ^products$ pages/products.php [L]
+RewriteRule ^projects$ pages/projects.php [L]
+RewriteRule ^project$ pages/project.php [L]
+RewriteRule ^product$ pages/product.php [L]
+RewriteRule ^cart$ pages/cart.php [L]
+RewriteRule ^blog$ pages/blog.php [L]
+RewriteRule ^blog/([a-z0-9-]+)$ pages/blog-post.php?slug=$1 [L]
+RewriteRule ^faq$ pages/faq.php [L]
+RewriteRule ^contact$ pages/contact.php [L]
+RewriteRule ^request-quote$ pages/quote.php [L]
+
+# Admin routes
+RewriteRule ^admin$ admin/index.php [L]
+RewriteRule ^admin/login$ admin/login.php [L]
+RewriteRule ^admin/dashboard$ admin/dashboard.php [L]
+
+# Allow uploads directory
+RewriteRule ^uploads/ - [L]
+
+# Security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
