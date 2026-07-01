@@ -3465,7 +3465,7 @@ p:last-child {
     }
     
     h1 {
-        font-size: 24px;
+        font-size: 22px;
     }
     
     h2 {
@@ -3473,7 +3473,7 @@ p:last-child {
     }
     
     .btn {
-        padding: 9px 18px;
+        padding: 8px 16px;
         font-size: 12px;
     }
 
@@ -3481,9 +3481,21 @@ p:last-child {
         grid-template-columns: 1fr;
     }
 
+    .hero-grid {
+        padding: 10px 0 20px;
+    }
+
+    .hero-carousel-slide img {
+        height: 180px;
+    }
+
+    .hero-image-placeholder {
+        height: 180px;
+    }
+
     .page-banner--tall {
-        min-height: 240px;
-        padding: 80px 0 40px;
+        min-height: 200px;
+        padding: 70px 0 30px;
     }
 
     .page-banner__desc {
