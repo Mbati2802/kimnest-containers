@@ -31,6 +31,13 @@ if (isset($_GET['reset'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['save_email'])) {
+        $notifEmail = sanitize($_POST['notification_email']);
+        $stmt = $pdo->prepare("INSERT INTO site_settings (setting_key, setting_value) VALUES ('notification_email', ?) ON DUPLICATE KEY setting_value = ?");
+        $stmt->execute([$notifEmail, $notifEmail]);
+        header('Location: ' . BASE_URL . '/admin/notifications.php?email_saved=1');
+        exit;
+    }
     $id = (int)$_POST['id'];
     $subject = sanitize($_POST['subject']);
     $body = $_POST['body'];
@@ -165,14 +172,30 @@ if (isset($_GET['edit'])) {
                 </script>
             <?php else: ?>
                 <div class="page-header">
-                    <h1>Notification Templates</h1>
+                    <h1>Notification Settings</h1>
                 </div>
 
-                <?php if (isset($_GET['saved'])): ?>
+                <?php if (isset($_GET['email_saved'])): ?>
+                    <div class="alert alert-success">Notification email updated.</div>
+                <?php elseif (isset($_GET['saved'])): ?>
                     <div class="alert alert-success">Template saved successfully.</div>
                 <?php elseif (isset($_GET['reset_ok'])): ?>
                     <div class="alert alert-success">Template reset to default.</div>
                 <?php endif; ?>
+
+                <div class="card" style="margin-bottom:20px;">
+                    <div class="card-body">
+                        <h3 style="margin:0 0 4px;font-size:15px;"><i class="fas fa-envelope" style="color:#3e7ac5;"></i> Notification Email</h3>
+                        <p style="margin:0 0 12px;font-size:12px;color:#6b7280;">Email address that receives notifications when users submit contact messages or quote requests.</p>
+                        <form method="POST" style="display:flex;gap:8px;align-items:flex-end;">
+                            <input type="hidden" name="save_email" value="1">
+                            <div class="form-group" style="flex:1;margin:0;">
+                                <input type="email" name="notification_email" value="<?= htmlspecialchars(getSetting('notification_email', SITE_EMAIL)) ?>" placeholder="admin@kimnestcontainers.co.ke" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+                        </form>
+                    </div>
+                </div>
 
                 <div class="card">
                     <div class="card-body">

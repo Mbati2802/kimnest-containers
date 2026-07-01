@@ -75,7 +75,7 @@ try {
     }
 
     // Send email notification to admin using template
-    $adminEmail = getSetting('site_email', SITE_EMAIL);
+    $adminEmail = getSetting('notification_email', getSetting('site_email', SITE_EMAIL));
     $notif = renderNotification('quote_notification', [
         'name'            => htmlspecialchars($full_name),
         'company'         => htmlspecialchars($company_name ?: 'N/A'),

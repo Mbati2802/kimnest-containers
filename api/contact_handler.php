@@ -37,7 +37,7 @@ try {
     $stmt->execute([$full_name, $phone, $email, $subject, $message, $attachment]);
     
     // Send email notification to admin using template
-    $adminEmail = getSetting('site_email', SITE_EMAIL);
+    $adminEmail = getSetting('notification_email', getSetting('site_email', SITE_EMAIL));
     $notif = renderNotification('contact_notification', [
         'name'      => htmlspecialchars($full_name),
         'email'     => htmlspecialchars($email),
