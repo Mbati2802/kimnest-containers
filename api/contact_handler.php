@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
 header('Content-Type: application/json');
 require_once __DIR__ . '/../includes/db.php';
 
@@ -36,7 +39,7 @@ try {
     $stmt = $pdo->prepare("INSERT INTO contacts (full_name, phone, email, subject, message, attachment) VALUES (?, ?, ?, ?, ?, ?)");
     $stmt->execute([$full_name, $phone, $email, $subject, $message, $attachment]);
     
-    // Send email notification (wrapped in try-catch so mail failures don't break the form)
+    // Send email notification (wrapped so mail failures don't break the form)
     try {
         $notif = renderNotification('contact_notification', [
             'name'      => htmlspecialchars($full_name),
@@ -50,11 +53,11 @@ try {
             $toEmail = $notif['email'] ?: getSetting('notification_email', getSetting('site_email', SITE_EMAIL));
             sendMail($toEmail, $notif['subject'], $notif['body'], null, null, $email);
         }
-    } catch (Exception $e) {
+    } catch (Throwable $e) {
         error_log('Contact notification email failed: ' . $e->getMessage());
     }
 
     echo json_encode(['success' => true, 'message' => 'Thank you! Your message has been sent. We will get back to you shortly.']);
-} catch (PDOException $e) {
+} catch (Throwable $e) {
     echo json_encode(['success' => false, 'message' => 'Database error. Please try again later.']);
 }
