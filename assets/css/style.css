@@ -3284,20 +3284,23 @@ p:last-child {
     .nav {
         position: fixed;
         top: var(--header-height);
-        left: 0;
         right: 0;
+        left: auto;
+        width: 260px;
+        height: calc(100vh - var(--header-height));
         background: var(--white);
         flex-direction: column;
         padding: var(--space-lg);
         box-shadow: var(--shadow-lg);
-        transform: translateY(-120%);
+        transform: translateX(100%);
         transition: transform var(--transition-base);
         z-index: 999;
-        border-top: 1px solid var(--gray-100);
+        border-left: 1px solid var(--gray-100);
+        overflow-y: auto;
     }
     
     .nav.active {
-        transform: translateY(0);
+        transform: translateX(0);
     }
     
     .mobile-toggle {
