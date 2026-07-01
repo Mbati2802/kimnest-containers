@@ -18,28 +18,30 @@
                     </div>
                 </div>
                 
-                <div class="footer-col">
-                    <h3>Quick Links</h3>
-                    <ul class="footer-links">
-                        <li><a href="<?= BASE_URL ?>/">Home</a></li>
-                        <li><a href="<?= BASE_URL ?>/about">About Us</a></li>
-                        <li><a href="<?= BASE_URL ?>/services">Services</a></li>
-                        <li><a href="<?= BASE_URL ?>/products">Products</a></li>
-                        <li><a href="<?= BASE_URL ?>/projects">Projects</a></li>
-                        <li><a href="<?= BASE_URL ?>/blog">Blog</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h3>Our Services</h3>
-                    <ul class="footer-links">
-                        <li><a href="<?= BASE_URL ?>/services#sales">Container Sales</a></li>
-                        <li><a href="<?= BASE_URL ?>/services#fabrication">Container Fabrication</a></li>
-                        <li><a href="<?= BASE_URL ?>/services#modifications">Modifications</a></li>
-                        <li><a href="<?= BASE_URL ?>/services#homes">Container Homes</a></li>
-                        <li><a href="<?= BASE_URL ?>/services#offices">Office Containers</a></li>
-                        <li><a href="<?= BASE_URL ?>/services#delivery">Delivery & Installation</a></li>
-                    </ul>
+                <div class="footer-links-group">
+                    <div class="footer-col">
+                        <h3>Quick Links</h3>
+                        <ul class="footer-links">
+                            <li><a href="<?= BASE_URL ?>/">Home</a></li>
+                            <li><a href="<?= BASE_URL ?>/about">About Us</a></li>
+                            <li><a href="<?= BASE_URL ?>/services">Services</a></li>
+                            <li><a href="<?= BASE_URL ?>/products">Products</a></li>
+                            <li><a href="<?= BASE_URL ?>/projects">Projects</a></li>
+                            <li><a href="<?= BASE_URL ?>/blog">Blog</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-col">
+                        <h3>Our Services</h3>
+                        <ul class="footer-links">
+                            <li><a href="<?= BASE_URL ?>/services#sales">Container Sales</a></li>
+                            <li><a href="<?= BASE_URL ?>/services#fabrication">Container Fabrication</a></li>
+                            <li><a href="<?= BASE_URL ?>/services#modifications">Modifications</a></li>
+                            <li><a href="<?= BASE_URL ?>/services#homes">Container Homes</a></li>
+                            <li><a href="<?= BASE_URL ?>/services#offices">Office Containers</a></li>
+                            <li><a href="<?= BASE_URL ?>/services#delivery">Delivery & Installation</a></li>
+                        </ul>
+                    </div>
                 </div>
                 
                 <div class="footer-col">
