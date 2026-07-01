@@ -33,7 +33,7 @@ if (isset($_GET['reset'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['save_email'])) {
         $notifEmail = sanitize($_POST['notification_email']);
-        $stmt = $pdo->prepare("INSERT INTO site_settings (setting_key, setting_value) VALUES ('notification_email', ?) ON DUPLICATE KEY setting_value = ?");
+        $stmt = $pdo->prepare("INSERT INTO site_settings (setting_key, setting_value) VALUES ('notification_email', ?) ON DUPLICATE KEY UPDATE setting_value = ?");
         $stmt->execute([$notifEmail, $notifEmail]);
         header('Location: ' . BASE_URL . '/admin/notifications.php?email_saved=1');
         exit;
@@ -41,9 +41,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = (int)$_POST['id'];
     $subject = sanitize($_POST['subject']);
     $body = $_POST['body'];
+    $notifEmail = sanitize($_POST['notification_email'] ?? '');
 
-    $stmt = $pdo->prepare("UPDATE notification_templates SET subject=?, body=? WHERE id=?");
-    $stmt->execute([$subject, $body, $id]);
+    $stmt = $pdo->prepare("UPDATE notification_templates SET subject=?, body=?, notification_email=? WHERE id=?");
+    $stmt->execute([$subject, $body, $notifEmail, $id]);
     header('Location: ' . BASE_URL . '/admin/notifications.php?saved=1');
     exit;
 }
@@ -132,6 +133,12 @@ if (isset($_GET['edit'])) {
                             </div>
 
                             <div class="form-group">
+                                <label>Send Notifications To</label>
+                                <input type="email" name="notification_email" value="<?= htmlspecialchars($editTemplate['notification_email'] ?? '') ?>" placeholder="<?= htmlspecialchars(SITE_EMAIL) ?>">
+                                <div class="template-note">Email that receives this notification. Leave empty to use the site default email.</div>
+                            </div>
+
+                            <div class="form-group">
                                 <label>Email Body (HTML)</label>
                                 <div id="quillEditor" style="height:350px;margin-bottom:12px;"></div>
                                 <textarea name="body" id="quillHtml" style="display:none;"><?= htmlspecialchars($editTemplate['body']) ?></textarea>
@@ -183,20 +190,6 @@ if (isset($_GET['edit'])) {
                     <div class="alert alert-success">Template reset to default.</div>
                 <?php endif; ?>
 
-                <div class="card" style="margin-bottom:20px;">
-                    <div class="card-body">
-                        <h3 style="margin:0 0 4px;font-size:15px;"><i class="fas fa-envelope" style="color:#3e7ac5;"></i> Notification Email</h3>
-                        <p style="margin:0 0 12px;font-size:12px;color:#6b7280;">Email address that receives notifications when users submit contact messages or quote requests.</p>
-                        <form method="POST" style="display:flex;gap:8px;align-items:flex-end;">
-                            <input type="hidden" name="save_email" value="1">
-                            <div class="form-group" style="flex:1;margin:0;">
-                                <input type="email" name="notification_email" value="<?= htmlspecialchars(getSetting('notification_email', SITE_EMAIL)) ?>" placeholder="admin@kimnestcontainers.co.ke" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
-                        </form>
-                    </div>
-                </div>
-
                 <div class="card">
                     <div class="card-body">
                         <p style="margin-bottom:16px;font-size:13px;color:#6b7280;">Customize the email notifications sent to admin when a contact message or quote request is submitted.</p>
@@ -211,7 +204,7 @@ if (isset($_GET['edit'])) {
                                     <tr>
                                         <th>Template</th>
                                         <th>Subject</th>
-                                        <th>Placeholders</th>
+                                        <th>Notification Email</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -220,7 +213,7 @@ if (isset($_GET['edit'])) {
                                         <tr>
                                             <td><strong><?= htmlspecialchars($t['name']) ?></strong><br><small style="color:#6b7280;"><?= htmlspecialchars($t['template_key']) ?></small></td>
                                             <td><?= htmlspecialchars($t['subject']) ?></td>
-                                            <td><small style="color:#6b7280;"><?= htmlspecialchars($t['placeholders']) ?></small></td>
+                                            <td><small style="color:#6b7280;"><?= $t['notification_email'] ? htmlspecialchars($t['notification_email']) : '<em>site default</em>' ?></small></td>
                                             <td>
                                                 <a href="<?= BASE_URL ?>/admin/notifications.php?edit=<?= $t['id'] ?>" class="btn btn-link btn-sm"><i class="fas fa-edit"></i> Edit</a>
                                             </td>

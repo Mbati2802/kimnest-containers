@@ -37,7 +37,6 @@ try {
     $stmt->execute([$full_name, $phone, $email, $subject, $message, $attachment]);
     
     // Send email notification to admin using template
-    $adminEmail = getSetting('notification_email', getSetting('site_email', SITE_EMAIL));
     $notif = renderNotification('contact_notification', [
         'name'      => htmlspecialchars($full_name),
         'email'     => htmlspecialchars($email),
@@ -47,7 +46,8 @@ try {
         'admin_url' => SITE_URL . '/admin/contacts.php',
     ]);
     if ($notif) {
-        sendMail($adminEmail, $notif['subject'], $notif['body'], null, null, $email);
+        $toEmail = $notif['email'] ?: getSetting('notification_email', getSetting('site_email', SITE_EMAIL));
+        sendMail($toEmail, $notif['subject'], $notif['body'], null, null, $email);
     }
 
     echo json_encode(['success' => true, 'message' => 'Thank you! Your message has been sent. We will get back to you shortly.']);

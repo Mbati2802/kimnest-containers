@@ -205,6 +205,7 @@ CREATE TABLE `notification_templates` (
   `subject` varchar(255) NOT NULL,
   `body` longtext NOT NULL,
   `placeholders` text DEFAULT NULL,
+  `notification_email` varchar(255) DEFAULT NULL,
   `created_at` timestamp DEFAULT current_timestamp(),
   `updated_at` timestamp DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
@@ -212,9 +213,9 @@ CREATE TABLE `notification_templates` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `notification_templates` WRITE;
-INSERT INTO `notification_templates` (`template_key`, `name`, `subject`, `body`, `placeholders`) VALUES
-('contact_notification', 'Contact Form Submission', 'New Contact: {subject}', '<h2>New Contact Message</h2><p><strong>From:</strong> {name}</p><p><strong>Email:</strong> {email}</p><p><strong>Phone:</strong> {phone}</p><p><strong>Subject:</strong> {subject}</p><p><strong>Message:</strong></p><p>{message}</p><hr><p><a href=\"{admin_url}\">View in Admin Panel</a></p>', 'name, email, phone, subject, message, admin_url'),
-('quote_notification', 'Quote Request Submission', 'New Quote Request from {name}', '<h2>New Quote Request</h2><p><strong>From:</strong> {name}</p><p><strong>Company:</strong> {company}</p><p><strong>Email:</strong> {email}</p><p><strong>Phone:</strong> {phone}</p><p><strong>Preferred Contact:</strong> {contact_method}</p><p><strong>Project Type:</strong> {project_type}</p><p><strong>Container Size:</strong> {container_size}</p><p><strong>Quantity:</strong> {quantity}</p><p><strong>Location:</strong> {location}</p><p><strong>Intended Use:</strong> {intended_use}</p><p><strong>Budget:</strong> {budget}</p><p><strong>Completion Date:</strong> {completion_date}</p><p><strong>Description:</strong></p><p>{description}</p>{cart_section}<hr><p><a href=\"{admin_url}\">View in Admin Panel</a></p>', 'name, company, email, phone, contact_method, project_type, container_size, quantity, location, intended_use, budget, completion_date, description, cart_section, admin_url');
+INSERT INTO `notification_templates` (`template_key`, `name`, `subject`, `body`, `placeholders`, `notification_email`) VALUES
+('contact_notification', 'Contact Form Submission', 'New Contact: {subject}', '<h2>New Contact Message</h2><p><strong>From:</strong> {name}</p><p><strong>Email:</strong> {email}</p><p><strong>Phone:</strong> {phone}</p><p><strong>Subject:</strong> {subject}</p><p><strong>Message:</strong></p><p>{message}</p><hr><p><a href=\"{admin_url}\">View in Admin Panel</a></p>', 'name, email, phone, subject, message, admin_url', NULL),
+('quote_notification', 'Quote Request Submission', 'New Quote Request from {name}', '<h2>New Quote Request</h2><p><strong>From:</strong> {name}</p><p><strong>Company:</strong> {company}</p><p><strong>Email:</strong> {email}</p><p><strong>Phone:</strong> {phone}</p><p><strong>Preferred Contact:</strong> {contact_method}</p><p><strong>Project Type:</strong> {project_type}</p><p><strong>Container Size:</strong> {container_size}</p><p><strong>Quantity:</strong> {quantity}</p><p><strong>Location:</strong> {location}</p><p><strong>Intended Use:</strong> {intended_use}</p><p><strong>Budget:</strong> {budget}</p><p><strong>Completion Date:</strong> {completion_date}</p><p><strong>Description:</strong></p><p>{description}</p>{cart_section}<hr><p><a href=\"{admin_url}\">View in Admin Panel</a></p>', 'name, company, email, phone, contact_method, project_type, container_size, quantity, location, intended_use, budget, completion_date, description, cart_section, admin_url', NULL);
 UNLOCK TABLES;
 
 --

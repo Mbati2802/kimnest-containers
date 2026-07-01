@@ -223,7 +223,7 @@ function getFAQCategories() {
 function getNotificationTemplate($templateKey) {
     global $pdo;
     try {
-        $stmt = $pdo->prepare("SELECT subject, body FROM notification_templates WHERE template_key = ?");
+        $stmt = $pdo->prepare("SELECT subject, body, notification_email FROM notification_templates WHERE template_key = ?");
         $stmt->execute([$templateKey]);
         return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     } catch (Exception $e) { return null; }
@@ -239,7 +239,8 @@ function renderNotification($templateKey, $placeholders = []) {
         $subject = str_replace('{' . $key . '}', $value, $subject);
         $body = str_replace('{' . $key . '}', $value, $body);
     }
-    return ['subject' => $subject, 'body' => $body];
+    $email = !empty($template['notification_email']) ? $template['notification_email'] : null;
+    return ['subject' => $subject, 'body' => $body, 'email' => $email];
 }
 
 function sendMail($to, $subject, $body, $fromEmail = null, $fromName = null, $replyTo = null) {

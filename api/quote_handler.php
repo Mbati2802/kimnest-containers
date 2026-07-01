@@ -75,7 +75,6 @@ try {
     }
 
     // Send email notification to admin using template
-    $adminEmail = getSetting('notification_email', getSetting('site_email', SITE_EMAIL));
     $notif = renderNotification('quote_notification', [
         'name'            => htmlspecialchars($full_name),
         'company'         => htmlspecialchars($company_name ?: 'N/A'),
@@ -94,7 +93,8 @@ try {
         'admin_url'       => SITE_URL . '/admin/quotes.php',
     ]);
     if ($notif) {
-        sendMail($adminEmail, $notif['subject'], $notif['body'], null, null, $email);
+        $toEmail = $notif['email'] ?: getSetting('notification_email', getSetting('site_email', SITE_EMAIL));
+        sendMail($toEmail, $notif['subject'], $notif['body'], null, null, $email);
     }
 
     $response = ['success' => true, 'message' => 'Thank you! Your quote request has been submitted. We will contact you shortly.'];
