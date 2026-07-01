@@ -3081,7 +3081,7 @@ p:last-child {
 .back-to-top {
     position: fixed;
     bottom: 24px;
-    right: 90px;
+    left: 24px;
     width: 42px;
     height: 42px;
     background: var(--primary);
@@ -3341,9 +3341,12 @@ p:last-child {
         grid-template-columns: 1fr;
     }
 
-    .quote-form-col,
+    .quote-form-col {
+        order: 2;
+    }
+
     .quote-info-col {
-        order: unset;
+        order: 1;
     }
 
     .contact-hours {
@@ -3615,6 +3618,6 @@ p:last-child {
         width: 36px;
         height: 36px;
         bottom: 16px;
-        right: 70px;
+        left: 16px;
     }
 }
