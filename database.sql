@@ -1,7 +1,6 @@
 -- KimNest Containers Database Schema
-
-CREATE DATABASE IF NOT EXISTS kimnest_db;
-USE kimnest_db;
+-- Import this into your database via phpMyAdmin
+-- Make sure you have selected your database first
 
 -- Admin Users
 CREATE TABLE admin_users (
