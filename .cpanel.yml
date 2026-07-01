@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home2/kimnestc/public_html/kimnest/
+    - /bin/cp -R * $DEPLOYPATH
