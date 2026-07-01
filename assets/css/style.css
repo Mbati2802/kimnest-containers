@@ -3411,11 +3411,15 @@ p:last-child {
     }
     
     .hero-btns {
-        flex-direction: column;
+        flex-direction: row;
+        gap: 8px;
     }
     
     .hero-btns .btn {
-        width: 100%;
+        flex: 1;
+        width: auto;
+        font-size: 11px;
+        padding: 8px 12px;
     }
 
     .projects-layout {
