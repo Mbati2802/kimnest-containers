@@ -17,6 +17,7 @@ Thumbs.db
 
 # Config with credentials (keep local only)
 /config.local.php
+/config.php
 
 # Temp files
 /tmp/

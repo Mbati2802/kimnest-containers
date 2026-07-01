@@ -1,10 +1,10 @@
 <?php
-// Database Configuration
+// Database Configuration — copy this to config.php and fill in your values
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'kimnest_db');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_PORT', '3307');
+define('DB_NAME', 'your_database_name');
+define('DB_USER', 'your_database_user');
+define('DB_PASS', 'your_database_password');
+define('DB_PORT', '3306');
 
 // Site Configuration
 define('SITE_NAME', 'Kimnest Containers');
@@ -16,10 +16,10 @@ define('BASE_URL', '');
 
 // Upload Configuration
 define('UPLOAD_DIR', __DIR__ . '/uploads/');
-define('MAX_FILE_SIZE', 10 * 1024 * 1024); // 10MB
+define('MAX_FILE_SIZE', 10 * 1024 * 1024);
 define('ALLOWED_EXTENSIONS', ['jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx']);
 
-// Admin Credentials (change these!)
+// Admin Credentials
 define('ADMIN_USER', 'admin');
 define('ADMIN_PASS', password_hash('admin123', PASSWORD_DEFAULT));
 
