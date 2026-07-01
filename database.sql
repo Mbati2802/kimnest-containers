@@ -162,7 +162,7 @@ CREATE TABLE newsletter (
 
 -- Insert default admin user
 INSERT INTO admin_users (username, password, full_name, email) VALUES
-('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Administrator', 'admin@kimnestcontainers.co.ke');
+('admin', '$2y$10$O.pxPhWMsjoCRZz0Bf7JA.jDQjDlRmaudE/fom7hb6ksRqnUnSsfK', 'Administrator', 'admin@kimnestcontainers.co.ke');
 
 CREATE TABLE IF NOT EXISTS faqs (
     id INT AUTO_INCREMENT PRIMARY KEY,
